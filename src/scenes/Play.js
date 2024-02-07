@@ -10,7 +10,7 @@ class Play extends Phaser.Scene {
         //     startFrame: 0,
         //     endFrame: 11
         // })
-        this.PLAYER_VELOCITY = 10
+        this.PLAYER_VELOCITY = 100
     }
 
     create() {
@@ -57,15 +57,20 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        // console.log(this.p1duck.y)
         let playerVector = new Phaser.Math.Vector2(0, 0)
         let playerDirection = 'down'
-        if(cursors.up.isDown){
-            playerVector.y = -1
-            playerDirection = 'up'
+        if(this.p1duck.y >= 125){
+            if(cursors.up.isDown){
+                playerVector.y = -1
+                playerDirection = 'up'
+            }
         }
-        else if(cursors.down.isDown){
-            playerVector.y = 1
-            playerDirection = 'down'
+        if(this.p1duck.y <= 367){
+            if(cursors.down.isDown){
+                playerVector.y = 1
+                playerDirection = 'down'
+            }
         }
 
         playerVector.normalize()
