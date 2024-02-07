@@ -4,29 +4,47 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('rocket', './assets/rocket.png')
-        this.load.image('spaceship', './assets/spaceship.png')
-        this.load.image('starfield', './assets/starfield.png')
-        this.load.spritesheet('explosion', './assets/explosion.png', {
+        this.load.image('park', 'assets/park-temp.png')
+        this.load.spritesheet('duck-walk', './assets/duck-walks-blinks.png', {
             frameWidth: 64,
-            frameHeight: 32,
+            frameHeight: 64,
             startFrame: 0,
-            endFrame: 9
+            endFrame: 11
         })
-        this.load.audio('sfx-select', './assets/sfx-select.wav')
-        this.load.audio('sfx-explosion', './assets/sfx-explosion.wav')
-        this.load.audio('sfx-shot', './assets/sfx-shot.wav')
+        this.load.spritesheet('duck-idle', './assets/duck-idle-blinks.png', {
+            frameWidth: 64,
+            frameHeight: 64,
+            startFrame: 0,
+            endFrame: 8
+        })
 
     }
 
     create() {
+
         this.anims.create({
-            key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
-            frameRate: 30
+            key: 'walking',
+            frameRate: 9,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('duck-walk', {
+                start: 0,
+                end: 11
+            })
         })
+
+        this.anims.create({
+            key: 'idle',
+            frameRate: 9,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('duck-idle', {
+                start: 0,
+                end: 8
+            })
+        })
+
+
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'American Typewriter',
             fontSize: '28px', 
             backgroundColor: '#F3B141', 
             color: '#843605',
@@ -36,7 +54,8 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5)
+        // this.add.bitmapText(game.config.width/2, game.config.height/2 - borderUISize - borderPadding,  'pixeboy', 'Beyond The Pong!').setOrigin(0.5)
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Beyond the Pond', menuConfig).setOrigin(0.5)
         this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows to move & (F) to fire', menuConfig).setOrigin(0.5)
         menuConfig.backgroundColor = '#00FF00'
         menuConfig.color = '#000'
@@ -51,7 +70,7 @@ class Menu extends Phaser.Scene {
                 spaceshipSpeed: 3,
                 gameTimer: 60000
             }
-            this.sound.play('sfx-select')
+            // this.sound.play('sfx-select')
             this.scene.start('playScene')
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
@@ -59,7 +78,7 @@ class Menu extends Phaser.Scene {
                 spaceshipSpeed: 4,
                 gameTimer: 45000
             }
-            this.sound.play('sfx-select')
+            // this.sound.play('sfx-select')
             this.scene.start('playScene')
         }
     }
